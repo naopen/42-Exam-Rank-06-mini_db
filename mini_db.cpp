@@ -10,7 +10,8 @@
 std::string path;
 std::map<std::string, std::string> db;
 
-void sigIntHandler(int){
+void sigIntHandler(int)
+{
     std::ofstream file(path);
     if(!file.is_open()){
         std::cerr << "Invalid file path" << std::endl;
@@ -25,7 +26,8 @@ void sigIntHandler(int){
     exit(0);
 }
 
-void readDb(){
+void readDb()
+{
     std::ifstream file(path);
     if(!file.is_open()){
         return;

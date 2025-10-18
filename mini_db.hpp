@@ -80,10 +80,12 @@ private:
     std::map<std::string, std::string> &db;
 
 public:
-	Server(int port, std::map<std::string, std::string> &db) :_listeningSocket(port), db(db){
+	Server(int port, std::map<std::string, std::string> &db) :_listeningSocket(port), db(db)
+	{
 		FD_ZERO(&afds);
     }	
-	int handleMessage(int fd, std::string msg){
+	int handleMessage(int fd, std::string msg)
+	{
 		std::istringstream s(msg);
 		std::string command, key, value;
 		s >> command >> key >> value;
