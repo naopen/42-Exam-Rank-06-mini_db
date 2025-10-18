@@ -10,7 +10,7 @@
 std::string path;
 std::map<std::string, std::string> db;
 
-void sigIntHandler(int n){
+void sigIntHandler(int){
     std::ofstream file(path);
     if(!file.is_open()){
         std::cerr << "Invalid file path" << std::endl;
