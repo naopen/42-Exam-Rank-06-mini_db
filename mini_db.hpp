@@ -8,7 +8,6 @@
 #include <sstream>
 #include <fstream>
 
-
 class Socket
 {
 private:
@@ -66,14 +65,13 @@ public:
 			return std::string("");
 		buf[bytes_read] = '\0';
 		std::string res(buf);
-		// c_str() でもいいがこちらの方法も
 		return res;
     }
 };
 
 class Server
 {
-private: 
+private:
 	Socket _listeningSocket;
     fd_set afds, wfds, rfds;
 	int max_fd;
@@ -83,7 +81,7 @@ public:
 	Server(int port, std::map<std::string, std::string> &db) :_listeningSocket(port), db(db)
 	{
 		FD_ZERO(&afds);
-    }	
+    }
 	int handleMessage(int fd, std::string msg)
 	{
 		std::istringstream s(msg);
@@ -126,34 +124,34 @@ public:
 				std::cout << "ready" << std::endl;
 
 				while(true){
-					rfds = afds; 
+					rfds = afds;
 					wfds = afds;
 
 					if(select(max_fd + 1, &rfds, &wfds, NULL, NULL) < 0)
 						throw std::runtime_error("Failed to select");
-					
+
 					for(int fd = 0; fd <= max_fd; ++fd){
 						if(!FD_ISSET(fd, &rfds))
 							continue;
-						
+
 						if(fd == _listeningSocket._sockfd){
 							int clientFd = _listeningSocket.accept(clientAddr);
 							FD_SET(clientFd, &afds);
-							max_fd = std::max(max_fd, clientFd); // これ知らないな
+							max_fd = std::max(max_fd, clientFd);
 							break;
 						}
 						else{
-							std::string msg = _listeningSocket.pullMessage(fd); // これは覚える
+							std::string msg = _listeningSocket.pullMessage(fd);
 							if(msg.empty()){
 								FD_CLR(fd, &afds);
 								close(fd);
 							}
 							handleMessage(fd, msg);
-						}	
+						}
 					}
 				}
 
-				return 0; //Success
+				return 0; // Success
 			}
 			catch(const std::exception& e)
 			{

@@ -6,7 +6,6 @@
 #include <signal.h>
 #include <fstream>
 
-
 std::string path;
 std::map<std::string, std::string> db;
 
@@ -39,7 +38,6 @@ void readDb()
     return;
 }
 
-
 int main(int ac, char *av[])
 {
     if(ac != 3){
@@ -57,6 +55,6 @@ int main(int ac, char *av[])
         std::cerr << "Internal server error" << std::endl;
         return EXIT_FAILURE;
     }
-	
+
 	return EXIT_SUCCESS;
 }
